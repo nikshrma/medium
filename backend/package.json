@@ -1,18 +1,16 @@
 {
   "name": "backend",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy --minify",
-    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
   "dependencies": {
-    "@prisma/extension-accelerate": "^3.0.0",
-    "dotenv": "^17.2.3",
-    "hono": "^4.10.7",
-    "prisma": "^7.0.1"
-  },
-  "devDependencies": {
-    "wrangler": "^4.4.0"
+    "prisma": "^7.1.0"
   }
 }
