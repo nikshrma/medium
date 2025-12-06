@@ -1,10 +1,11 @@
-import express from 'express';
-import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
+import express from 'express';
+import cors from 'cors';
 import { rootRouter } from './routes/index.js';
 const app = express();
 app.use(express.json());
 app.use(cors());
+console.log("DB URL IS"  , process.env.DATABASE_URL);
 app.use('/api/v1' , rootRouter);
 app.listen(process.env.PORT || 3000 );

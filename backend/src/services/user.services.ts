@@ -10,16 +10,16 @@ import bcrypt from "bcrypt";
 import type { SigninInput, SignupInput } from "nikhlshrmadev-common-app"
 const saltRounds = 8;
 
-export async function checkUserExistance(email : string){
+export async function checkUserExistance(username : string){
     return await prisma.user.findUnique({
-        where:{email}
+        where:{username}
     });
 }
 export async function createUser(userPayload: SignupInput){
     const userHash = await bcrypt.hash(userPayload.password , saltRounds)
     const user = await prisma.user.create({
         data:{
-        email:userPayload.username,
+        username:userPayload.username,
         password:userHash,
         name:userPayload.name??null
         //smth new i learned
