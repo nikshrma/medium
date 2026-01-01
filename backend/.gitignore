@@ -6,3 +6,5 @@ dist
 /src/generated/prisma
 progress.README.md
 /generated/prisma
+
+/src/generated/prisma
