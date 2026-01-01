@@ -21,10 +21,16 @@ export const createBlogInput = z.object({
 })
 export type CreateBlogInput = z.infer<typeof createBlogInput>
 
-export const updateBlogInput = z.object({
-    title: z.string(),
-    content: z.string(),
-    id: z.number()
-})
+export const updateBlogInput = z
+  .object({
+    id: z.uuid(),
+    title: z.string().optional(),
+    content: z.string().optional()
+  })
+  .refine(
+    data => data.title !== undefined || data.content !== undefined,
+    { message: "At least one field must be updated" }
+  );
+
 export type UpdateBlogInput = z.infer<typeof updateBlogInput>
 
