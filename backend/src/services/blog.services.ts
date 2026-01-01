@@ -1,4 +1,4 @@
-import type { CreateBlogInput, UpdateBlogInput } from "nikhlshrmadev-common-app";
+import type { CreateBlogInput, UpdateBlogInput, UpdateBlogVisibilityInput } from "nikhlshrmadev-common-app";
 import { prisma } from "../../db.js";
 
 export async function createBlog(blogData: CreateBlogInput, userId: string) {
@@ -56,4 +56,25 @@ export async function getAllBlogs() {
 
     })
     return blogs;
+}
+
+export async function getSelfBlogs(userId:string){
+    const selfBlogs = await prisma.post.findMany({
+        where:{
+            authorId:userId
+        }
+    })
+    return selfBlogs;
+}
+export async function changeVisibility(payload:UpdateBlogVisibilityInput , userId:string){
+    const result = await prisma.post.updateMany({
+        where:{
+            id:payload.id,
+            authorId:userId
+        },
+        data:{
+            published:payload.published
+        }
+    })
+    return result.count;
 }

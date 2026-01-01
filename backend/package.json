@@ -22,7 +22,7 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "nikhlshrmadev-common-app": "^1.0.4",
+    "nikhlshrmadev-common-app": "^1.0.5",
     "pg": "^8.16.3"
   },
   "devDependencies": {

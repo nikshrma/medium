@@ -1,8 +1,8 @@
 import { Router, type Request, type Response } from "express";
-import { createBlogInput, updateBlogInput } from "nikhlshrmadev-common-app";
+import { createBlogInput, updateBlogInput, updateBlogVisibilityInput } from "nikhlshrmadev-common-app";
 import { authCheck } from "../middlewares/auth.middleware.js";
 import z from "zod";
-import { createBlog, getAllBlogs, getBlog, updateBlog } from "../services/blog.services.js";
+import { changeVisibility, createBlog, getAllBlogs, getBlog, getSelfBlogs, updateBlog } from "../services/blog.services.js";
 
 export const blogRouter = Router();
 
@@ -50,6 +50,16 @@ blogRouter.put("/" ,authCheck , async (req:Request , res:Response)=>{
     }
     
 })
+
+blogRouter.get("/bulk" ,authCheck , async(req:Request , res:Response)=>{
+    const blogs = await getAllBlogs();
+    return res.json(blogs)
+})
+
+blogRouter.get("/bulk/me" , authCheck , async(req:Request , res:Response)=>{
+    const ownBlogs = await getSelfBlogs(req.userId!);
+    res.json(ownBlogs);
+})
 blogRouter.get("/:id" ,authCheck , async(req:Request , res:Response)=>{
     const parsed = z.uuid().safeParse(req.params.id);
     if(!parsed.success){
@@ -67,7 +77,20 @@ blogRouter.get("/:id" ,authCheck , async(req:Request , res:Response)=>{
         Blog
     })
 })
-blogRouter.get("/bulk" ,authCheck , async(req:Request , res:Response)=>{
-    const blogs = await getAllBlogs();
-    return res.json(blogs)
+blogRouter.patch("/visibility" , authCheck , async(req:Request , res:Response)=>{
+    const payload = updateBlogVisibilityInput.safeParse(req.body);
+    if(!payload.success){
+        return res.status(400).json({
+            message:"Invalid input."
+        })
+    }
+    const a = await changeVisibility(payload.data , req.userId!);
+    if(!a){
+        return res.status(403).json({
+            message : "Failed to change the visibility."
+        })
+    }
+    return res.json({
+        message:"Changed visibility successfully"
+    })
 })
