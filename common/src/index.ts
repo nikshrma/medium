@@ -34,3 +34,8 @@ export const updateBlogInput = z
 
 export type UpdateBlogInput = z.infer<typeof updateBlogInput>
 
+export const updateBlogVisibilityInput = z.object({
+  id: z.uuid(),
+  published: z.boolean()
+});
+export type UpdateBlogVisibilityInput = z.infer<typeof updateBlogVisibilityInput>
