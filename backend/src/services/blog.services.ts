@@ -51,7 +51,8 @@ export async function getAllBlogs() {
             id: true,
             title: true,
             content: true,
-            authorId: true
+            authorId: true,
+            createdAt:true
         }
 
     })
@@ -62,6 +63,14 @@ export async function getSelfBlogs(userId:string){
     const selfBlogs = await prisma.post.findMany({
         where:{
             authorId:userId
+        },
+        orderBy: { createdAt: "desc" },
+        select: {
+            id: true,
+            title: true,
+            content: true,
+            authorId: true,
+            createdAt:true
         }
     })
     return selfBlogs;
