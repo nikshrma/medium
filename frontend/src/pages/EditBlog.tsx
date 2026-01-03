@@ -23,8 +23,7 @@ export default function EditBlog() {
       try {
         setIsLoading(true)
         const blog = await blogService.getBlogById(id)
-
-        if (blog.authorId !== user?.username) {
+        if (blog.authorId !== user?.id) {
           setError("You can only edit your own blogs")
           return
         }

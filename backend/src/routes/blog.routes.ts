@@ -72,10 +72,7 @@ blogRouter.get("/:id" ,authCheck , async(req:Request , res:Response)=>{
         return res.status(404).json({ message: "Blog not found" });
     }
 
-    return res.json({
-        message:"Fetched blog",
-        Blog
-    })
+    return res.json(Blog)
 })
 blogRouter.patch("/visibility" , authCheck , async(req:Request , res:Response)=>{
     const payload = updateBlogVisibilityInput.safeParse(req.body);

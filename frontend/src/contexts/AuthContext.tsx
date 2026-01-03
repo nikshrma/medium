@@ -44,14 +44,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signin = async (username: string, password: string) => {
     const response = await authService.signin(username, password)
-    const userData = { id: "", username: response.user.username, name: response.user.name }
+    const userData = { id: response.user.id, username: response.user.username, name: response.user.name }
     setUser(userData)
     localStorage.setItem("user", JSON.stringify(userData))
   }
 
   const signup = async (username: string, password: string, name?: string) => {
     const response = await authService.signup(username, password, name)
-    const userData = { id: "", username: response.user.username, name: name || "" }
+    const userData = { id: response.user.id, username: response.user.username, name: name || "" }
     setUser(userData)
     localStorage.setItem("user", JSON.stringify(userData))
   }
@@ -83,5 +83,6 @@ export function useAuth() {
   if (!context) {
     throw new Error("useAuth must be used within AuthProvider")
   }
-  return context
+  console.log(context);
+  return context;
 }

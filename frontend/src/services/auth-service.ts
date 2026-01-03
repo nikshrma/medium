@@ -8,7 +8,7 @@ export const authService = {
     // Extract user info from token or return basic user object
     return {
       token: response.data.token,
-      user: { id: "", username, name: name || "" },
+      user: response.data.user!,
     }
   },
 
@@ -17,7 +17,7 @@ export const authService = {
     apiClient.setToken(response.data.token)
     return {
       token: response.data.token,
-      user: { id: "", username },
+      user: response.data.user!,
     }
   },
 

@@ -16,6 +16,7 @@ export interface Blog {
 export interface AuthResponse {
   message: string
   token: string
+  user?: User
 }
 
 export interface SignUpRequest {

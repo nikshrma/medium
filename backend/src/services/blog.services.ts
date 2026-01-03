@@ -52,7 +52,8 @@ export async function getAllBlogs() {
             title: true,
             content: true,
             authorId: true,
-            createdAt:true
+            createdAt:true,
+            published:true
         }
 
     })
@@ -70,7 +71,8 @@ export async function getSelfBlogs(userId:string){
             title: true,
             content: true,
             authorId: true,
-            createdAt:true
+            createdAt:true,
+            published:true
         }
     })
     return selfBlogs;
