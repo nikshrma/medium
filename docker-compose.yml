@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: "postgres:16-alpine"
+    container_name: "postgres"
+    ports :
+      - 5432:5432
+    volumes:
+      - medium_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=app_db
+  backend:
+    image: "medium-backend"
+    container_name: "medium-backend"
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+      args:
+        DATABASE_URL: postgresql://dummy:dummy@localhost:5432/dummy
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/app_db
+    ports:
+      - "3000:3000"
+    command: >
+      sh -c "
+      npm run db:deploy &&
+      npm run start
+      "
+    depends_on: 
+      - postgres
+  frontend:
+    image: "medium-frontend"
+    container_name: "medium-frontend"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    env_file:
+      - ./frontend/.env
+    command: >
+      sh -c "
+      npm run dev"
+    ports:
+      - 5173:5173
+volumes:
+  medium_db:
