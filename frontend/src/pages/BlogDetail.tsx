@@ -86,7 +86,7 @@ export default function BlogDetail() {
     )
   }
 
-  const isOwner = user?.username === blog.authorId
+  const isOwner = user?.id === blog.authorId
   const isDraft = !blog.published
 
   if (isDraft && !isOwner) {
